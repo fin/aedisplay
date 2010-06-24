@@ -12,8 +12,12 @@
 
 @interface MyImage : NSObject {
     NSString * mPath;
+    int state;
 }
-
 - (void) setPath:(NSString *) path;
+- (MyImage *) copy;
+@property(readwrite) int state;
+@property(readwrite) NSString *mPath;
+
 
 @end

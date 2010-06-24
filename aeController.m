@@ -8,6 +8,12 @@
 
 #import "aeController.h"
 
+static BOOL isfile(NSString *path) {
+    const char *mypath = [path UTF8String];
+    FILE *testfile = fopen(mypath, "r");
+    if (testfile) { fclose(testfile); return YES; } else { return NO; }
+}
+
 static NSArray *openFiles()
 {
     NSOpenPanel *panel;
@@ -26,6 +32,36 @@ static NSArray *openFiles()
 }
 
 
+void fsevents_callback(ConstFSEventStreamRef streamRef,
+                       void *userData,
+                       size_t numEvents,
+                       void *eventPaths,
+                       const FSEventStreamEventFlags eventFlags[],
+                       const FSEventStreamEventId eventIds[])
+{
+    aeController *ac = (aeController *)userData;
+    size_t i;
+    for(i=0; i < numEvents; i++){
+        int found = 0;
+        NSString *filename = [(NSArray *)eventPaths objectAtIndex:i];
+        NSLog(filename);
+
+        for(size_t j=0;j<[[ac mImages] count]; j++) {
+            if([[[[ac mImages] objectAtIndex:j] mPath] isEqual:filename]){
+                found=1;
+                NSLog(@"FOUND");
+            }
+        }
+        BOOL isDir;
+        if(found==0 && [[NSFileManager defaultManager] fileExistsAtPath:filename isDirectory:&isDir] && !isDir) {
+            NSLog(@"NOTFOUND");
+            [ac addAnImageWithPath:filename];
+            [ac setLastEventId:[NSNumber numberWithInt:eventIds[i]]];
+        }
+    }
+}
+
+
 @implementation aeController
 
 - (void) awakeFromNib {
@@ -35,7 +71,8 @@ static NSArray *openFiles()
 	[mImageBrowser setAnimates:YES];
 	[mImageBrowser setContentResizingMask:NSViewWidthSizable];
 	
-	[mImageView setImage:[[NSImage alloc] initWithContentsOfFile:@"/Users/fin/Desktop/bla.png"]];
+	[mImageView setImage:[[NSImage alloc] init]];
+    [self initializeEventStream];
 }
 
 - (void) dealloc {
@@ -68,11 +105,8 @@ static NSArray *openFiles()
 - (void) imageBrowserSelectionDidChange:(IKImageBrowserView *)aBrowser {
 	int index = [[mImageBrowser selectionIndexes] firstIndex];
 	
-	NSString *path = [[mImages objectAtIndex:index] imageRepresentation];
-
-	[mImageView setImage:[[NSImage alloc] initWithContentsOfFile:path]];
+	[mImageView setImage:[[mImages objectAtIndex:index] actualImage]];
 	[mImageView setNeedsDisplay:YES];
-	
 }
 
 
@@ -147,5 +181,34 @@ static NSArray *openFiles()
     }
 	[NSThread detachNewThreadSelector:@selector(addImagesWithPaths:) toTarget:self withObject:path];
 }
+
+
+- (void) initializeEventStream
+{
+    NSString *myPath =  [[[[NSFileManager defaultManager] URLsForDirectory:NSDesktopDirectory inDomains:NSUserDomainMask] objectAtIndex:0] path];
+    NSArray *pathsToWatch = [NSArray arrayWithObject:myPath];
+    void *appPointer = (void *)self;
+    FSEventStreamContext context = {0, appPointer, NULL, NULL, NULL};
+    NSTimeInterval latency = 3.0;
+    stream = FSEventStreamCreate(NULL,
+                                 &fsevents_callback,
+                                 &context,
+                                 (CFArrayRef) pathsToWatch,
+                                 [lastEventId unsignedLongLongValue],
+                                 (CFAbsoluteTime) latency,
+                                 kFSEventStreamCreateFlagUseCFTypes
+                                 );
+    
+    FSEventStreamScheduleWithRunLoop(stream,
+                                     CFRunLoopGetCurrent(),
+                                     kCFRunLoopDefaultMode);
+    FSEventStreamStart(stream);
+}
+
+
+
+
+@synthesize mImages;
+@synthesize lastEventId;
 
 @end

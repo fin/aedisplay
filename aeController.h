@@ -13,10 +13,13 @@
 @interface aeController : NSWindowController {
 	IBOutlet IKImageBrowserView * mImageBrowser;
 	IBOutlet NSImageView * mImageView;
-	NSMutableArray * mImages;
+    NSMutableArray * mImages;
 	NSMutableArray * mImportedImages;
-
+    FSEventStreamRef stream;
+    NSNumber* lastEventId;
 }
 - (IBAction) openDocument:(id) sender;
+@property(readwrite,retain) NSMutableArray *mImages;
+@property(readwrite,retain) NSNumber *lastEventId;
 
 @end
