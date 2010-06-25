@@ -7,17 +7,22 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import <WebKit/WebKit.h>
 
 
 @interface MyImage : NSObject {
-    NSString * mPath;
-    int state;
+    NSString * imgPath;
+    NSInteger state;
+    DOMHTMLElement *element;
+    NSString *uuid;
+
 }
-- (void) setPath:(NSString *) path;
 - (MyImage *) copy;
-@property(readwrite) int state;
-@property(readwrite) NSString *mPath;
+- (NSImage *) actualImage;
+@property(readwrite) NSInteger state;
+@property(readonly) NSString *imgPath;
+@property(readwrite,assign) DOMHTMLElement *element;
+@property(readwrite,assign) NSString *uuid;
 
 
 @end

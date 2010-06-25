@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>ohlol</title>
+<style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+        max-height: 110px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        height: auto;
+    }
+    ul#items li {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        margin-right: 10px;
+        border: 10px solid transparent;
+        position: relative;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        margin-top: 10px;
+        margin-left: 10px;
+        white-space: nowrap;
+        position: relative;
+    }
+    img {
+        max-height: 78px;
+        padding: 0;
+    }
+    
+    li.small img {
+        max-height: 20px;
+    }
+    ul#items li.selected {
+        -webkit-border-radius: 5px;
+        border-color: Highlight;
+    }
+    </style>
+    <script>
+        function listenToClick(id) {
+            var element = document.getElementById(id);
+            element.addEventListener("click", function() { objc.selectObject_(id); });
+        }
+        function select(id) {
+            var element = document.getElementById(id);
+            element.className=element.className+" selected";
+            window.scrollTo(element.previousSibling.offsetLeft, 0);
+        }
+        function unselect(id) {
+            var element = document.getElementById(id);
+            element.className=element.className.replace("selected", "");
+        }
+        function disable(id) {
+            var element = document.getElementById(id);
+            element.className=element.className+" small";
+        }
+        function enable(id) {
+            var element = document.getElementById(id);
+            element.className=element.className.replace("small", "");
+        }
+        function setListeners() {
+            document.body.onkeydown=keyDown;
+        }
+        
+        function selectRelativeActive(element, property) {
+            for(var e=element[property];e!=null;e=e[property]) {
+                if(e.className.length==0 || e.className.indexOf("small")==-1) {
+                    objc.selectObject_(e.id);
+                    break;
+                }
+            }
+        }
+        
+        function keyDown(k) {
+            var selected = document.querySelector(".selected");
+            var log = document.getElementById("ohrofl");
+            //document.body.innerHTML = document.body.innerHTML + k.keyCode+'|'+selected;
+            //document.body.innerHTML = document.body.innerHTML+selected.nextElementSibling.id;
+            log.innerHTML=k.keyCode;
+            if(k.keyCode==37) {
+                log.innerHTML='left';
+                if(k.shiftKey)
+                    objc.selectObject_(selected.previousElementSibling.id);
+                else
+                    selectRelativeActive(selected, 'previousElementSibling');
+                k.stopPropagation();
+                return false;
+            }
+            if(k.keyCode==39) {
+                log.innerHTML='right';
+                if(k.shiftKey)
+                    objc.selectObject_(selected.nextElementSibling.id);
+                else
+                    selectRelativeActive(selected, 'nextElementSibling');
+                k.stopPropagation();
+                return false;
+            }
+            if(k.keyCode==40) {
+                log.innerHTML='down';
+                objc.disableObject_(selected.id);
+                k.stopPropagation();
+                return false;
+            }
+            if(k.keyCode==38) {
+                log.innerHTML='up';
+                objc.enableObject_(selected.id);
+                k.stopPropagation();
+                return false;
+            }
+        }
+    </script>
+</head>
+<body onload="setListeners()" onselectstart="return false;">
+<p style="font-size: 9px; line-height: 1; margin: 0; padding: 0; display: none;" id="ohrofl">hi</p>
+<ul id="items">
+</ul>
+</body>
+</html>

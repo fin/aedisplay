@@ -14,27 +14,41 @@
 
 - (void) dealloc
 {
-    [mPath release];
     [super dealloc];
 }
 
 @synthesize state;
-@synthesize mPath;
+@synthesize imgPath;
+@synthesize element;
+@synthesize uuid;
 
 
-- (void) setPath:(NSString *) path
+
+
+- (void) setImgPath:(NSString *) path
 {
     state = 1;
-    if(mPath != path){
-        [mPath release];
-        mPath = [path retain];
+    if(imgPath != path){
+        [imgPath release];
+        imgPath = [path retain];
     }
+}
+
+- (MyImage *) init {
+    [super init];
+
+    CFUUIDRef	uuidObj = CFUUIDCreate(nil);//create a new UUID
+    //get the string representation of the UUID
+    NSString	*uuidString = (NSString*)CFUUIDCreateString(nil, uuidObj);
+    CFRelease(uuidObj);
+    [self setUuid:uuidString];
+    return self;
 }
 
 
 - (MyImage *) copy {
     MyImage *mi =[[MyImage alloc] init];
-    [mi setPath:mPath];
+    [mi setImgPath:imgPath];
     [mi setState: state];
     return mi;
 }
@@ -47,13 +61,13 @@
 - (id) imageRepresentation
 {
     if (state==1) {
-        return [[NSImage alloc] initWithContentsOfFile:mPath];        
+        return [[NSImage alloc] initWithContentsOfFile:imgPath];        
     } else {
         float resizeWidth = 13.0;
         float resizeHeight = 13.0;
         
         
-        NSImage *sourceImage =  [[NSImage alloc] initWithContentsOfFile:mPath];
+        NSImage *sourceImage =  [[NSImage alloc] initWithContentsOfFile:imgPath];
         NSImage *resizedImage = [[NSImage alloc] initWithSize: NSMakeSize(resizeWidth, resizeHeight)];
         
         NSSize originalSize = [sourceImage size];
@@ -68,12 +82,16 @@
 
 - (id) actualImage
 {
-    return [[NSImage alloc] initWithContentsOfFile:mPath];
+    NSLog(@"actualImage %@", imgPath);
+    if (imgPath==NULL||imgPath==nil) {
+        NSLog(@"path is nil");
+    }
+    return [[NSImage alloc] initWithContentsOfFile:imgPath];
 }
 
 - (NSString *) imageUID
 {
-    NSString *s = [NSString stringWithFormat:@"%@-%d", mPath, state];
+    NSString *s = [NSString stringWithFormat:@"%@-%d", imgPath, state];
     return s;
 }
 

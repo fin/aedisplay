@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* aethertest3AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* aethertest3AppDelegate.m */; };
-		30ACBEBA11CF17B200EA4183 /* AeImageBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30ACBEB911CF17B200EA4183 /* AeImageBrowserView.m */; };
+		30ACC25811D3F2D900EA4183 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30ACC25711D3F2D900EA4183 /* WebKit.framework */; };
+		30ACC31411D3F44000EA4183 /* webview.html in Resources */ = {isa = PBXBuildFile; fileRef = 30ACC31311D3F44000EA4183 /* webview.html */; };
+		30ACC34311D3F9C800EA4183 /* aeWebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30ACC34211D3F9C800EA4183 /* aeWebViewDelegate.m */; };
 		30E4EFB311A2E03400ED8818 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E4EFB211A2E03400ED8818 /* Quartz.framework */; };
 		30E4F01511A2E05100ED8818 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E4F01411A2E05100ED8818 /* QuartzCore.framework */; };
 		30E4F01A11A2E28C00ED8818 /* aeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E4F01911A2E28C00ED8818 /* aeController.m */; };
@@ -30,8 +32,10 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		30ACBEB811CF17B200EA4183 /* AeImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AeImageBrowserView.h; sourceTree = "<group>"; };
-		30ACBEB911CF17B200EA4183 /* AeImageBrowserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AeImageBrowserView.m; sourceTree = "<group>"; };
+		30ACC25711D3F2D900EA4183 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		30ACC31311D3F44000EA4183 /* webview.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = webview.html; sourceTree = "<group>"; };
+		30ACC34111D3F9C800EA4183 /* aeWebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aeWebViewDelegate.h; sourceTree = "<group>"; };
+		30ACC34211D3F9C800EA4183 /* aeWebViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = aeWebViewDelegate.m; sourceTree = "<group>"; };
 		30E4EFB211A2E03400ED8818 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		30E4F01411A2E05100ED8818 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		30E4F01811A2E28C00ED8818 /* aeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aeController.h; sourceTree = "<group>"; };
@@ -50,6 +54,7 @@
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				30E4EFB311A2E03400ED8818 /* Quartz.framework in Frameworks */,
 				30E4F01511A2E05100ED8818 /* QuartzCore.framework in Frameworks */,
+				30ACC25811D3F2D900EA4183 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,14 +64,14 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				30ACBEB811CF17B200EA4183 /* AeImageBrowserView.h */,
-				30ACBEB911CF17B200EA4183 /* AeImageBrowserView.m */,
 				30E4F15211A3010200ED8818 /* MyImage.h */,
 				30E4F15311A3010200ED8818 /* MyImage.m */,
 				256AC3D80F4B6AC300CF3369 /* aethertest3AppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* aethertest3AppDelegate.m */,
 				30E4F01811A2E28C00ED8818 /* aeController.h */,
 				30E4F01911A2E28C00ED8818 /* aeController.m */,
+				30ACC34111D3F9C800EA4183 /* aeWebViewDelegate.h */,
+				30ACC34211D3F9C800EA4183 /* aeWebViewDelegate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -74,6 +79,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				30ACC25711D3F2D900EA4183 /* WebKit.framework */,
 				30E4EFB211A2E03400ED8818 /* Quartz.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				30E4F01411A2E05100ED8818 /* QuartzCore.framework */,
@@ -126,6 +132,7 @@
 				8D1107310486CEB800E47090 /* aethertest3-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				30ACC31311D3F44000EA4183 /* webview.html */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -184,6 +191,7 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+				30ACC31411D3F44000EA4183 /* webview.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +206,7 @@
 				256AC3DA0F4B6AC300CF3369 /* aethertest3AppDelegate.m in Sources */,
 				30E4F01A11A2E28C00ED8818 /* aeController.m in Sources */,
 				30E4F15411A3010200ED8818 /* MyImage.m in Sources */,
-				30ACBEBA11CF17B200EA4183 /* AeImageBrowserView.m in Sources */,
+				30ACC34311D3F9C800EA4183 /* aeWebViewDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

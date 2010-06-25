@@ -39,12 +39,11 @@ void fsevents_callback(ConstFSEventStreamRef streamRef,
                        const FSEventStreamEventFlags eventFlags[],
                        const FSEventStreamEventId eventIds[])
 {
-    aeController *ac = (aeController *)userData;
+/*    aeController *ac = (aeController *)userData;
     size_t i;
     for(i=0; i < numEvents; i++){
         int found = 0;
         NSString *filename = [(NSArray *)eventPaths objectAtIndex:i];
-        NSLog(filename);
 
         for(size_t j=0;j<[[ac mImages] count]; j++) {
             if([[[[ac mImages] objectAtIndex:j] mPath] isEqual:filename]){
@@ -59,54 +58,83 @@ void fsevents_callback(ConstFSEventStreamRef streamRef,
             [ac setLastEventId:[NSNumber numberWithInt:eventIds[i]]];
         }
     }
+ */
 }
 
 
 @implementation aeController
 
 - (void) awakeFromNib {
-	mImages = [[NSMutableArray alloc] init];
+//	mImages = [[NSMutableArray alloc] init];
 	mImportedImages = [[NSMutableArray alloc] init];
 		
-	[mImageBrowser setAnimates:YES];
-	[mImageBrowser setContentResizingMask:NSViewWidthSizable];
+//	[mImageBrowser setAnimates:YES];
+//	[mImageBrowser setContentResizingMask:NSViewWidthSizable];
 	
 	[mImageView setImage:[[NSImage alloc] init]];
     [self initializeEventStream];
+        
+    NSString *resourcePath = [[[[NSBundle mainBundle] resourcePath]
+                               stringByReplacingOccurrencesOfString:@"/" withString:@"//"]
+                              stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    
+    [[webView mainFrame] loadHTMLString:[NSString stringWithContentsOfFile:
+                                         [[NSBundle mainBundle] pathForResource:@"webview"
+                                                                         ofType:@"html"]
+                                                                  encoding:NSUTF8StringEncoding
+                                                                     error:NULL]
+                                baseURL:[NSURL URLWithString:[NSString stringWithFormat:@"file:/%@//", resourcePath]]];
+    
+    [webView setUIDelegate:webViewDelegate];
+    [webView setEditingDelegate:webViewDelegate];
+    [webViewDelegate setDataSource:images];
+    
+    [images addObserver:self forKeyPath:@"selectionIndexes" options:0 context:nil];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    NSLog(@"observe aeC");
+    [[[images arrangedObjects] objectAtIndex:[images selectionIndex]] actualImage];
+    NSLog(@"-observe aeC");
+    [mImageView setImage:[[[images arrangedObjects] objectAtIndex:[images selectionIndex]] actualImage]];
+    [mImageView setNeedsDisplay:YES];
+    NSLog(@"/observe aeC");
+}
+
+
 - (void) dealloc {
-	[mImages release];
+//	[mImages release];
 	[mImportedImages release];
-	[mImageBrowser reloadData];
+//	[mImageBrowser reloadData];
 	
 	[super dealloc];
 }
 
 - (void) updateDatasource
 {
-    [mImages addObjectsFromArray:mImportedImages];
+    [images addObjects:mImportedImages];
     [mImportedImages removeAllObjects];
-    [mImageBrowser reloadData];
+//    [mImageBrowser reloadData];
 }
 
 
-- (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *) view
-{
-    return [mImages count];
-}
+//- (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *) view
+//{
+//    return [mImages count];
+//}
 
-- (id) imageBrowser:(IKImageBrowserView *) view itemAtIndex:(NSUInteger) index
-{
-    return [mImages objectAtIndex:index];
-}
+//- (id) imageBrowser:(IKImageBrowserView *) view itemAtIndex:(NSUInteger) index
+//{
+//    return [mImages objectAtIndex:index];
+//}
 
 
 - (void) imageBrowserSelectionDidChange:(IKImageBrowserView *)aBrowser {
-	int index = [[mImageBrowser selectionIndexes] firstIndex];
-	
-	[mImageView setImage:[[mImages objectAtIndex:index] actualImage]];
-	[mImageView setNeedsDisplay:YES];
+//	int index = [[mImageBrowser selectionIndexes] firstIndex];
 }
 
 
@@ -115,9 +143,8 @@ void fsevents_callback(ConstFSEventStreamRef streamRef,
     MyImage *p;
 	
     p = [[MyImage alloc] init];
-    [p setPath:path];
+    [p setImgPath:path];
     [mImportedImages addObject:p];
-    [p release];
 }
 
 - (void) addImagesWithPath:(NSString *) path recursive:(BOOL) recursive
@@ -208,7 +235,6 @@ void fsevents_callback(ConstFSEventStreamRef streamRef,
 
 
 
-@synthesize mImages;
 @synthesize lastEventId;
 
 @end
