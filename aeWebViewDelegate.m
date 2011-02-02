@@ -6,13 +6,14 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "NSString+NSStringHalpers.h"
 #import "aeWebViewDelegate.h"
 #import "MyImage.h"
+#import <WebKit/WebKit.h>
 
 @implementation aeWebViewDelegate
 - (void)setDataSource:(NSArrayController *) data_ {
     data = data_;
+    NSLog(@"data: %@", data_);
     NSLog(@"adding observer");
     [data addObserver:self forKeyPath:@"arrangedObjects" options:0 context:nil];    
     [data addObserver:self forKeyPath:@"selectionIndexes" options:0 context:nil];
@@ -85,9 +86,15 @@
                                 change:(NSDictionary *)change
                                context:(void *)context
 {
+    NSLog(@"value for arranged objects");
+    NSLog(@"data: %@", data);
+
     MyImage *i;
     for(i in [data arrangedObjects]) {
-        if ([i element]==NULL) {
+        NSLog(@"i: %@", i);
+
+        if ([i element]==NULL && [[[webView mainFrame] DOMDocument] getElementById:@"items"]!=NULL) {
+            NSLog(@"i no element: %@", i);            
             DOMHTMLElement *li = (DOMHTMLElement *)[[[webView mainFrame] DOMDocument] createElement:@"li"];
             DOMHTMLElement *e = (DOMHTMLElement *)[[[webView mainFrame] DOMDocument] createElement:@"img"];
             DOMAttr *a = [[[webView mainFrame] DOMDocument] createAttribute:@"src"];
@@ -103,6 +110,7 @@
             [aid setValue:[i uuid]];
             [li setAttributeNode:aid];
             [[[[webView mainFrame] DOMDocument] getElementById:@"items"] appendChild:li];
+            NSLog(@"innerhtml: %@", [[[webView mainFrame] DOMDocument] getElementById:@"items"]);
             [[webView windowScriptObject] callWebScriptMethod:@"listenToClick" withArguments:[NSArray arrayWithObject:[i uuid]]];
         }
     }
@@ -132,5 +140,16 @@
     // disable text selection
     return NO;
 }
+
+- (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo {
+    NSLog(@"rofl?");
+    return WebDragDestinationActionNone;
+}
+
+- (void)webViewDidFinishLoad:(id)aWebView {
+    NSLog(@"finished loading");
+    [self observeValueForArrangedObjects:nil change:nil context:nil];
+}
+
 
 @end

@@ -8,8 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
-#import "NSString+NSStringHalpers.h"
-
 
 @interface aeWebViewDelegate : NSObject {
     NSArrayController * data;

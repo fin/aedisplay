@@ -1,5 +1,5 @@
 //
-//  main.m
+//  MyDocumentController.h
 //  nsdocumenttest
 //
 //  Created by fin del kind on 2/2/11.
@@ -8,7 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-int main(int argc, char *argv[])
-{
-    return NSApplicationMain(argc, (const char **) argv);
+
+@interface MyDocumentController : NSDocumentController {
+
 }
+
+- (IBAction) openDocument: (id)sender;
+
+@end

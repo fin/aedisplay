@@ -20,7 +20,7 @@
 - (MyImage *) copy;
 - (NSImage *) actualImage;
 @property(readwrite) NSInteger state;
-@property(readonly) NSString *imgPath;
+@property(readwrite,retain) NSString *imgPath;
 @property(readwrite,assign) DOMHTMLElement *element;
 @property(readwrite,assign) NSString *uuid;
 
