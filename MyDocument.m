@@ -210,7 +210,6 @@ void fsevents_callback(ConstFSEventStreamRef streamRef,
 	
     p = [[MyImage alloc] init];
     [p setImgPath:path];
-    
     [mImportedImages addObject:p];
 }
 
@@ -226,6 +225,8 @@ void fsevents_callback(ConstFSEventStreamRef streamRef,
         n = [content count];
 		for(i=0; i<n; i++){
             //NSLog(@"adding image: %@", [content objectAtIndex:i]);
+            if([[content objectAtIndex:i] hasPrefix:@"."])
+                continue;
             if(recursive)
 				[self addImagesWithPath:
 				 [path stringByAppendingPathComponent:
@@ -237,8 +238,7 @@ void fsevents_callback(ConstFSEventStreamRef streamRef,
 				  [content objectAtIndex:i]]];
         }
     }
-    else {
-        //NSLog(@"not a directory: %@", path);
+    else if([[NSFileManager defaultManager] fileExistsAtPath:path]) {
         [self addAnImageWithPath:path];
     }
 }

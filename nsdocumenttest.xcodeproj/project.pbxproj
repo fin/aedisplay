@@ -13,8 +13,6 @@
 		30CCFDF812F8EF1300124901 /* aeWebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CCFDF712F8EF1300124901 /* aeWebViewDelegate.m */; };
 		30CCFDFF12F8EF3500124901 /* MyImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CCFDFE12F8EF3500124901 /* MyImage.m */; };
 		30CCFE0E12F8F00C00124901 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30CCFE0C12F8F00C00124901 /* MyDocument.xib */; };
-		30CCFE1912F8F04500124901 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30CCFE1812F8F04500124901 /* WebKit.framework */; };
-		30CCFE1B12F8F04C00124901 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30CCFE1A12F8F04C00124901 /* Quartz.framework */; };
 		30CCFE4712F8F21D00124901 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30CCFE4612F8F21D00124901 /* Quartz.framework */; };
 		30CCFE4912F8F22500124901 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30CCFE4812F8F22500124901 /* WebKit.framework */; };
 		30CCFE4B12F8F23100124901 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30CCFE4A12F8F23100124901 /* QuartzCore.framework */; };
@@ -46,8 +44,6 @@
 		30CCFDFD12F8EF3500124901 /* MyImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyImage.h; sourceTree = "<group>"; };
 		30CCFDFE12F8EF3500124901 /* MyImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyImage.m; sourceTree = "<group>"; };
 		30CCFE0D12F8F00C00124901 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
-		30CCFE1812F8F04500124901 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		30CCFE1A12F8F04C00124901 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		30CCFE4612F8F21D00124901 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		30CCFE4812F8F22500124901 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		30CCFE4A12F8F23100124901 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -62,8 +58,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
-				30CCFE1912F8F04500124901 /* WebKit.framework in Frameworks */,
-				30CCFE1B12F8F04C00124901 /* Quartz.framework in Frameworks */,
 				30CCFE4712F8F21D00124901 /* Quartz.framework in Frameworks */,
 				30CCFE4912F8F22500124901 /* WebKit.framework in Frameworks */,
 				30CCFE4B12F8F23100124901 /* QuartzCore.framework in Frameworks */,
